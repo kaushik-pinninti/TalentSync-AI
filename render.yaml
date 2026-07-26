@@ -1,0 +1,39 @@
+# render.yaml
+# Production blueprint for deploying the platform on Render (https://render.com)
+services:
+  # Main Unified Node.js Fullstack Web Service
+  - type: web
+    name: talentsync-platform
+    env: docker
+    dockerfilepath: Dockerfile
+    dockerContext: .
+    plan: starter
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ENVIRONMENT
+        value: production
+      - key: PORT
+        value: 3000
+      
+      # Database and AI Integrations
+      - key: DATABASE_URL
+        sync: false
+        placeholder: "Neon PostgreSQL Connection String (e.g. postgresql://user:password@ep-host.neon.tech/dbname?sslmode=require)"
+      - key: GEMINI_API_KEY
+        sync: false
+        placeholder: "Google Gemini API Key (get yours at https://aistudio.google.com/)"
+
+      # JWT Secret Keys (Render automatically generates secure random hashes)
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: JWT_REFRESH_SECRET_KEY
+        generateValue: true
+      
+      # Expirations (Optional overrides)
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 120
+      - key: REFRESH_TOKEN_EXPIRE_DAYS
+        value: 7

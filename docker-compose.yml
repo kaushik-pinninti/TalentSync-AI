@@ -1,0 +1,53 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  # Main SaaS Application Service (Node.js monolith or FastAPI container)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner-node # Use 'runner-node' for monolithic or 'runner-python' for Python backend
+    container_name: talentsync-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - ENVIRONMENT=development
+      - PORT=3000
+      # Connects directly to the adjacent 'db' service in the docker bridge network
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/talentsync?sslmode=disable
+      - GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
+      # JWT Secrets matching both Node.js (JWT_SECRET) and Python (JWT_SECRET_KEY) backends
+      - JWT_SECRET=enterprise-secure-jwt-secret-key-1337
+      - JWT_SECRET_KEY=enterprise-secure-jwt-secret-key-1337
+      - JWT_REFRESH_SECRET_KEY=enterprise-secure-jwt-refresh-secret-key-1337
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - REFRESH_TOKEN_EXPIRE_DAYS=7
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Dedicated Local PostgreSQL DB Container for easy testing
+  db:
+    image: postgres:15-alpine
+    container_name: talentsync-db
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=talentsync
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d talentsync"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+    driver: local

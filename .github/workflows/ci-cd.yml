@@ -1,0 +1,100 @@
+# .github/workflows/ci-cd.yml
+name: TalentSync AI Enterprise CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, master, production ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  # ==========================================
+  # STAGE 1: Code Verification & Testing
+  # ==========================================
+  verify-and-test:
+    name: Code Quality, Lint & Test Suite
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Runtime (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Project Dependencies
+        run: npm ci
+
+      - name: Run TypeScript Linter (tsc)
+        run: npm run lint
+
+      - name: Execute Full-Stack Integration Tests
+        run: npm run test
+
+      - name: Verify Full-Stack Build Compilation
+        run: npm run build
+
+  # ==========================================
+  # STAGE 2: Container Image Build & Sanity Check
+  # ==========================================
+  container-verification:
+    name: Dockerize & Verify Image Integration
+    needs: verify-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Production Node.js Image (Monolithic Runner)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          target: runner-node
+          push: false # Do not push to registry during standard PR verify builds
+          tags: talentsync/platform:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ==========================================
+  # STAGE 3: Automated Continuous Deployment
+  # ==========================================
+  deploy-production:
+    name: Continuous Deployment to Cloud Environments
+    needs: container-verification
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/production'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Render.com Auto-deployment Trigger
+      - name: Deploy to Render (Node Backend or Monolith)
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        if: env.RENDER_DEPLOY_HOOK != ''
+        run: |
+          echo "🚀 Triggering automatic Render deployment..."
+          curl -f -X POST "$RENDER_DEPLOY_HOOK"
+          echo "✅ Render deploy hook triggered successfully!"
+
+      # Vercel Decoupled Frontend Deployment (Optional)
+      - name: Deploy Frontend to Vercel (Optional)
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: .
+        if: env.VERCEL_TOKEN != ''
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}

@@ -1,0 +1,6 @@
+{
+  "name": "Enterprise AI Resume Screening Platform",
+  "description": "An advanced AI-powered SaaS platform for recruiters to parse resumes, rank candidates, generate interview questions, and chat with an AI hiring copilot.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

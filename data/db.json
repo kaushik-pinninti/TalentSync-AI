@@ -1,0 +1,58 @@
+{
+  "users": [],
+  "jobs": [],
+  "candidates": [],
+  "match_results": [],
+  "interview_questions": [],
+  "audit_logs": [],
+  "system_settings": [],
+  "copilot_chats": [],
+  "interviews": [],
+  "notifications": [],
+  "notification_templates": [
+    {
+      "id": 1,
+      "category": "interview_invitation",
+      "subject": "Interview Scheduled: {{interview_title}} at {{company_name}}",
+      "body": "Hi {{candidate_name}},\n\nWe are excited to invite you to interview for the {{job_title}} position at {{company_name}}.\n\nHere are your interview details:\n- Date/Time: {{datetime}}\n- Duration: {{duration}} minutes\n- Interviewer: {{interviewer_name}}\n- Platform: {{platform}}\n{{meeting_link_section}}\n\nPlease let us know if you have any questions or need to reschedule.\n\nBest regards,\n\n{{recruiter_name}}\n{{company_name}} Team",
+      "variables": "[\"candidate_name\", \"job_title\", \"company_name\", \"interview_title\", \"datetime\", \"duration\", \"interviewer_name\", \"platform\", \"meeting_link_section\", \"recruiter_name\"]"
+    },
+    {
+      "id": 2,
+      "category": "password_reset",
+      "subject": "Password Reset Request for {{user_name}}",
+      "body": "Hi {{user_name}},\n\nWe received a request to reset your password for your {{company_name}} account.\n\nTo reset your password, please click the link below or enter this verification code:\nVerification Code: {{reset_code}}\nReset Link: {{reset_link}}\n\nIf you did not request a password reset, please ignore this email or contact support if you have concerns.\n\nBest regards,\n\n{{company_name}} Security Team",
+      "variables": "[\"user_name\", \"company_name\", \"reset_code\", \"reset_link\"]"
+    },
+    {
+      "id": 3,
+      "category": "job_update",
+      "subject": "Application Update: {{job_title}} at {{company_name}}",
+      "body": "Hi {{candidate_name}},\n\nWe wanted to provide you with an update regarding your application for the {{job_title}} role at {{company_name}}.\n\nYour application status has been updated to: {{status}}.\n\nOur team is currently reviewing next steps, and we will reach out if we require further details or to schedule subsequent steps.\n\nBest regards,\n\n{{recruiter_name}}\n{{company_name}} Recruitment Team",
+      "variables": "[\"candidate_name\", \"job_title\", \"company_name\", \"status\", \"recruiter_name\"]"
+    },
+    {
+      "id": 4,
+      "category": "offer_letter",
+      "subject": "Official Job Offer: {{job_title}} - {{company_name}}",
+      "body": "Dear {{candidate_name}},\n\nOn behalf of {{company_name}}, we are thrilled to offer you the position of {{job_title}}!\n\nWe were incredibly impressed by your skills and experience, and we believe you will be a fantastic addition to our team.\n\nHere is a summary of the offer details:\n- Title: {{job_title}}\n- Base Salary: {{salary}} per year\n- Employment Type: {{employment_type}}\n- Proposed Start Date: {{start_date}}\n\nPlease find the full offer letter attached or viewable via your profile dashboard. To accept, please sign and return this document by {{deadline}}.\n\nWelcome to the team!\n\nSincerely,\n\n{{recruiter_name}}\n{{company_name}} Team",
+      "variables": "[\"candidate_name\", \"job_title\", \"company_name\", \"salary\", \"employment_type\", \"start_date\", \"deadline\", \"recruiter_name\"]"
+    },
+    {
+      "id": 5,
+      "category": "rejection",
+      "subject": "Your Application for {{job_title}} at {{company_name}}",
+      "body": "Dear {{candidate_name}},\n\nThank you so much for taking the time to meet with us and discuss the {{job_title}} position at {{company_name}}.\n\nAfter careful consideration, we have decided to move forward with other candidates whose experience more closely aligns with our immediate requirements.\n\nWe were deeply impressed by your background and will keep your profile in our candidate pool for future opportunities that match your expertise.\n\nWe wish you the absolute best in your career pursuits.\n\nWarm regards,\n\n{{recruiter_name}}\n{{company_name}} Recruitment Team",
+      "variables": "[\"candidate_name\", \"job_title\", \"company_name\", \"recruiter_name\"]"
+    },
+    {
+      "id": 6,
+      "category": "reminder",
+      "subject": "Friendly Reminder: Upcoming Interview for {{job_title}}",
+      "body": "Hi {{candidate_name}},\n\nThis is a friendly reminder of your upcoming interview round for the {{job_title}} position at {{company_name}}.\n\nUpcoming Session Details:\n- Subject: {{interview_title}}\n- Date/Time: {{datetime}}\n- Interviewer: {{interviewer_name}}\n- Platform: {{platform}}\n{{meeting_link_section}}\n\nPlease make sure to have a stable internet connection, turn your camera on, and join 3 minutes before the scheduled start time.\n\nBest regards,\n\n{{recruiter_name}}\n{{company_name}} Team",
+      "variables": "[\"candidate_name\", \"job_title\", \"company_name\", \"interview_title\", \"datetime\", \"interviewer_name\", \"platform\", \"meeting_link_section\", \"recruiter_name\"]"
+    }
+  ],
+  "app_notifications": [],
+  "documents": []
+}
