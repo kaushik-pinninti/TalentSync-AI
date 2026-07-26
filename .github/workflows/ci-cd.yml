@@ -22,11 +22,13 @@ jobs:
       - name: Setup Node.js Runtime (v20)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: 'npm'
+            node-version: '20'
+ 
+      - name: Setup Bun Runtime
+        uses: oven-sh/setup-bun@v2
 
       - name: Install Project Dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Run TypeScript Linter (tsc)
         run: npm run lint
