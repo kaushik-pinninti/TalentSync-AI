@@ -112,7 +112,7 @@ jobs:
       # Render Deployment
       - name: Deploy to Render
         env:
-          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          RENDER_DEPLOY_HOOK: ${{ secrets.https://api.render.com/deploy/srv-d9j98dn41pts73cb9d0g?key=-5mUnnpwDOE }}
         if: env.RENDER_DEPLOY_HOOK != ''
         run: |
           echo "🚀 Triggering Render deployment..."
