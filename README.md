@@ -1,6 +1,15 @@
 # TalentSync AI - Enterprise SaaS Resume Screening & Hiring Copilot Platform
 
 TalentSync AI is a production-grade commercial HR SaaS platform designed to streamline talent sourcing, candidate screening, and interviewing processes using advanced AI engines. Recruiters can post job listings, upload applicant resumes (PDF, DOCX, TXT), compute exact candidate-to-job fit matching, generate custom-tailored interview panels, and converse with a context-aware recruiting copilot.
+---
+
+## 🌐 Live Demo
+
+🚀 Try the application here:
+
+**Live Application:** https://talent-sync-ai-tau.vercel.app/
+
+Experience AI-powered resume screening, candidate matching, interview generation, and recruiter copilot features directly in the deployed platform.
 
 ---
 
